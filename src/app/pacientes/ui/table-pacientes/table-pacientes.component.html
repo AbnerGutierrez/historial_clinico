@@ -1,0 +1,86 @@
+<div class="relative overflow-x-auto">
+  <div class="flex my-5" id="buscador">
+    <div class="relative hidden md:block">
+      <div
+        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+      >
+        <svg
+          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+        <span class="sr-only">Search icon</span>
+      </div>
+      <input
+        type="text"
+        id="search-navbar"
+        class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Buscar paciente"
+      />
+    </div>
+  </div>
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr class="text-center">
+        <th scope="col" class="px-6 py-3">ID</th>
+        <th scope="col" class="px-6 py-3">Pciente</th>
+        <th scope="col" class="px-6 py-3">Citas</th>
+        <th scope="col" class="px-6 py-3">Ver</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(paciente of pacienteState.state().pacientes;track paciente){
+      <tr
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center"
+      >
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+        >
+          {{ paciente.id_paciente }}
+        </th>
+        <td class="px-6 py-4">
+          {{ paciente.nombre_1 }} {{ paciente.nombre_2 }}
+        </td>
+        <td class="px-6 py-4">5</td>
+        <td class="relative px-6 py-4">
+          <a [routerLink]="">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-eye w-full"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+              <path
+                d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"
+              />
+            </svg>
+          </a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
