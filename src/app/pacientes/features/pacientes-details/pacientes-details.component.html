@@ -1,1 +1,151 @@
-<p>pacientes-details works!</p>
+<div
+  class="mx-auto my-12 w-full max-w-screen-md bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+>
+  <div class="flex flex-col items-center pb-10">
+    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+      Historial clinico de
+    </h5>
+    <span class="text-sm text-gray-500 dark:text-gray-400">
+      {{ pacienteDetailState.paciente()?.nombre_1 || "cargando" }}
+      {{ pacienteDetailState.paciente()?.nombre_2 }}
+      {{ pacienteDetailState.paciente()?.apellidoP }}
+      {{ pacienteDetailState.paciente()?.apellidoM }}
+    </span>
+    <div class="flex mt-4 md:mt-6">
+      <a
+        [routerLink]="[
+          '/nuevaconsulta',
+          pacienteDetailState.paciente()?.id_paciente
+        ]"
+        class="cursor-pointer flex justify-between items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-plus"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M12 5l0 14" />
+          <path d="M5 12l14 0" />
+        </svg>
+        Nueva consulta
+      </a>
+      <a
+        [routerLink]="[
+          '/actualizar',
+          pacienteDetailState.paciente()?.id_paciente
+        ]"
+        class="cursor-pointer flex justify-between items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-edit"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path
+            d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
+          />
+          <path
+            d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+          />
+          <path d="M16 5l3 3" />
+        </svg>
+        Editar
+      </a>
+      <button
+        type="button"
+        class="flex justify-between items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-trash"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M4 7l16 0" />
+          <path d="M10 11l0 6" />
+          <path d="M14 11l0 6" />
+          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+        </svg>
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-[repeat(2,40%)] gap-6 mx-8 justify-center">
+  <!--CARDS CITAS-->
+  @if(!pacienteCitas.pacienteCitas()){
+  <h5>Paciente sin citas medicas....</h5>
+  }@else { @for(cita of pacienteCitas.pacienteCitas();track cita){
+  <div
+    class="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+  >
+    <h5
+      class="text-center cursor-default mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white"
+    >
+      Aqui deberia de ir lo que se me olvido
+    </h5>
+
+    <div class="grid">
+      <p class="mb-3 font-normal text-center text-gray-700 dark:text-gray-400">
+        <span class="text-orange-700 font-bold">Pronostico:</span><br />
+        {{ cita.pronostico }}
+      </p>
+
+      <p class="mb-3 font-normal text-center text-gray-700 dark:text-gray-400">
+        <span class="text-orange-700 font-bold">Tratamienro:</span><br />
+        {{ cita.tratamiento }}
+      </p>
+    </div>
+    <div class="flex items-center justify-center w-full">
+      <button
+        type="button"
+        class="flex focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+      >
+        Ver detalles
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-right"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M5 12l14 0" />
+          <path d="M15 16l4 -4" />
+          <path d="M15 8l4 4" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  } }
+</div>

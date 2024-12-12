@@ -7,6 +7,8 @@ import {
 } from '@angular/forms';
 import { isRequired } from '../../utils/validator';
 import { PacienteService } from '../../data-access/pacientes.service';
+import { toast } from 'ngx-sonner';
+import { Router } from '@angular/router';
 
 interface FormNuevoPaciente {
   nombre: FormControl<string | null>;
@@ -23,7 +25,7 @@ interface FormNuevoPaciente {
 export default class NuevoPacienteComponent {
   private _formBuilder = inject(FormBuilder);
   private pacienteService = inject(PacienteService);
-
+  private route = inject(Router);
   isRequired(field: 'nombre' | 'F_nacimiento' | 'F_inicio_H') {
     return isRequired(field, this.form);
   }
@@ -37,6 +39,9 @@ export default class NuevoPacienteComponent {
 
   submit() {
     if (this.form.invalid) return;
+
+    //OBTENIENDO VALORES DEL FORMULARIO
+
     let nombre_1, nombre_2, apellidoM, apellidoP;
     const nombre = this.form.value.nombre;
     const nombreDividido = nombre?.split(/\s+/);
@@ -65,16 +70,18 @@ export default class NuevoPacienteComponent {
       F_inicio_H,
       alergias,
     };
-
-    //LOGICA PARA CREAR UN PACIENTE NUEVO
-
-    this.pacienteService.createPaciente(paciente).subscribe(
-      (response) => {
+    //LOGICA PARA AGREGAR UN PACIENTE NUEVO
+    this.pacienteService.createPaciente(paciente).subscribe({
+      next: (response) => {
         console.log('Paciente agregado exitosamente:', response);
+        toast.message('Usuario creado correctamente', {
+          description: `Nuevo paciente: ${nombre}`,
+        });
+        this.route.navigateByUrl('');
       },
-      (error) => {
-        console.error('Error al agregar paciente:', error);
-      }
-    );
+      error: (error) => {
+        toast.error('Error al agregar paciente');
+      },
+    });
   }
 }
