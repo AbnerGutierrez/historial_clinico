@@ -9,6 +9,7 @@ import { isRequired } from '../../utils/validator';
 import { PacienteService } from '../../data-access/pacientes.service';
 import { toast } from 'ngx-sonner';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 interface FormNuevoPaciente {
   nombre: FormControl<string | null>;
@@ -21,11 +22,13 @@ interface FormNuevoPaciente {
   selector: 'app-nuevo-paciente',
   imports: [ReactiveFormsModule],
   templateUrl: './nuevo-paciente.component.html',
+  providers: [DatePipe], // Registrar DatePipe aquí
 })
 export default class NuevoPacienteComponent {
   private _formBuilder = inject(FormBuilder);
   private pacienteService = inject(PacienteService);
   private route = inject(Router);
+  private datepipe = inject(DatePipe);
   isRequired(field: 'nombre' | 'F_nacimiento' | 'F_inicio_H') {
     return isRequired(field, this.form);
   }
@@ -56,8 +59,12 @@ export default class NuevoPacienteComponent {
       nombre_2 = '';
       apellidoP = nombreDividido[1];
       apellidoM = nombreDividido[2];
+    } else {
+      toast.warning('Coloca un nombre valido ');
     }
-    const { F_nacimiento, F_inicio_H, alergias } = this.form.value;
+    let { F_nacimiento, F_inicio_H, alergias } = this.form.value;
+    F_nacimiento = this.datepipe.transform(F_nacimiento, 'yyyy-MM-dd');
+    F_inicio_H = this.datepipe.transform(F_inicio_H, 'yyyy-MM-dd');
 
     if (!nombre || !F_nacimiento || !F_inicio_H) return;
 

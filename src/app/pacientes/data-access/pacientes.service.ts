@@ -21,6 +21,10 @@ export class PacienteService extends BaseHttpService {
     return this.http.post(`${this.apiUrl}/agregar`, paciente);
   }
 
+  updatePaciente(paciente: pacienteAgregar, id_paciente: string) {
+    return this.http.put(`${this.apiUrl}/actualizar/${id_paciente}`, paciente);
+  }
+
   //READ ONE
   getPacienteu(id_paciente: string): Observable<Paciente> {
     return this.http
@@ -30,5 +34,8 @@ export class PacienteService extends BaseHttpService {
   //CONSULTAR CITAS DE PACIENTES
   getCitasPaciente(id_paciente: string): Observable<CitaPaciente[]> {
     return this.http.get<CitaPaciente[]>(`${this.apiUrl}/citas/${id_paciente}`);
+  }
+  deletePaciente(id_paciente: string) {
+    return this.http.delete(`${this.apiUrl}/borrar/${id_paciente}`);
   }
 }

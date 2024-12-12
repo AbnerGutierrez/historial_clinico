@@ -29,6 +29,7 @@
       />
     </div>
   </div>
+  @if(pacienteState.state().pacientes.length >= 1 ){
   <table
     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
@@ -83,4 +84,7 @@
       }
     </tbody>
   </table>
+  }@else {
+  <h2>No hay pacientes</h2>
+  }
 </div>
